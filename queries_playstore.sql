@@ -29,3 +29,18 @@ SELECT app_name FROM analytics WHERE rating < 3 AND reviews >= 10000;
 
 -- Find the top 10 most-reviewed apps that cost between 10 cents and a dollar. --
 SELECT * FROM analytics WHERE price BETWEEN .10 AND 1.00 ORDER BY reviews DESC LIMIT 10;
+
+-- Find the most out of date app.  --
+SELECT * FROM analytics ORDER BY last_updated ASC LIMIT 1; 
+
+-- Find the most expensive app --
+SELECT * FROM analytics ORDER BY price DESC LIMIT 1;
+
+-- Count all the reviews in the Google Play Store. --
+SELECT SUM(reviews) AS total_reviews FROM analytics;
+
+-- Find all the categories that have more than 300 apps in them. -- 
+SELECT category, COUNT(category) AS count_of FROM analytics GROUP BY category HAVING count(category) > 300;
+
+-- Find the app that has the highest proportion of min_installs to reviews, among apps that have been installed at least 100,000 times. Display the name of the app along with the number of reviews, the min_installs, and the proportion. --
+SELECT app_name, reviews, min_installs, CAST(reviews AS FLOAT) / min_installs AS reviews_installs_proportion FROM analytics WHERE min_installs >= 100000 ORDER BY reviews_installs_proportion DESC LIMIT 1;
