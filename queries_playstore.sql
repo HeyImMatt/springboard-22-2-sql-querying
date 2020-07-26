@@ -40,7 +40,14 @@ SELECT * FROM analytics ORDER BY price DESC LIMIT 1;
 SELECT SUM(reviews) AS total_reviews FROM analytics;
 
 -- Find all the categories that have more than 300 apps in them. -- 
-SELECT category, COUNT(category) AS count_of FROM analytics GROUP BY category HAVING count(category) > 300;
+SELECT category, COUNT(category) AS count_of 
+  FROM analytics 
+  GROUP BY category 
+  HAVING count(category) > 300;
 
 -- Find the app that has the highest proportion of min_installs to reviews, among apps that have been installed at least 100,000 times. Display the name of the app along with the number of reviews, the min_installs, and the proportion. --
-SELECT app_name, reviews, min_installs, CAST(reviews AS FLOAT) / min_installs AS reviews_installs_proportion FROM analytics WHERE min_installs >= 100000 ORDER BY reviews_installs_proportion DESC LIMIT 1;
+SELECT app_name, reviews, min_installs, CAST(min_installs AS FLOAT) / reviews AS reviews_installs_proportion 
+  FROM analytics 
+  WHERE min_installs >= 100000 
+  ORDER BY reviews_installs_proportion DESC 
+  LIMIT 1;
